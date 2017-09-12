@@ -1,1 +1,3 @@
+.cache/
 unittest_example/__pycache__/
+pytest_example/__pycache__/
