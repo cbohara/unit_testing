@@ -15,7 +15,27 @@ class PhonebookTest(unittest.TestCase):
         with self.assertRaises(KeyError):
             self.phonebook.lookup("missing")
 
-    @unittest.skip("WIP")
     def test_empty_phonebook_is_consistent(self):
         phonebook = Phonebook()
         self.assertTrue(self.phonebook.is_consistent())
+
+    def test_phonebook_with_normal_entries_is_consistent(self):
+        self.phonebook.add("Bob", "12345")
+        self.phonebook.add("Mary", "012345")
+        self.assertTrue(self.phonebook.is_consistent())
+
+    def test_phonebook_with_duplicate_entries_is_inconsistent(self):
+        self.phonebook.add("Bob", "12345")
+        self.phonebook.add("Mary", "12345")
+        self.assertFalse(self.phonebook.is_consistent())
+
+    def test_phonebook_with_numbers_that_prefix_one_another_is_inconsistent(self):
+        self.phonebook.add("Bob", "12345")
+        self.phonebook.add("Mary", "123")
+        self.assertFalse(self.phonebook.is_consistent())
+
+    def test_phonebook_adds_names_and_numbers(self):
+        self.phonebook.add("Sue", "12345")
+        # assertIn takes iterable and checks if element is in the iterable
+        self.assertIn("Sue", phonebook.get_names())
+        self.assertIn("12345", phonebook.get_numbers())
